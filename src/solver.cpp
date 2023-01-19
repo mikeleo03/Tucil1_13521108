@@ -102,6 +102,20 @@ bool inputCharValid (string input)
     }
 }
 
+int chartoInt (string input)
+// Melakukan konversi dari karakter karater yang mungkin dalam sebuah kartu menjadi sebuah integer
+{
+    // KAMUS LOKAL
+
+    // ALGORITMA
+    switch (input[0]) {
+        case 'A' : return 1; break;
+        case 'J' : return 11; break;
+        case 'Q' : return 12; break;
+        case 'K' : return 13; break;
+    }
+}
+
 char operations (int ops) 
 // Sebelumnya membuat operationsasi dari operasi dalam bentuk angka
 // Fungsi ini mengembalikan bentuk angka dalam operasi menjadi operasi + - * /
@@ -266,8 +280,75 @@ void input ()
     // Keluar dari kalang, artinya input 1 atau 2
     // Pemrosesan berdasarkan kondisi
     if (com == 1) {
-        cout << "Masukkan 4 buah kartu" << endl;
-        cin >> a >> b >> c >> d;
+        bool valid = false;
+        do {
+            cout << "Masukkan 4 buah kartu" << endl;
+            cin >> p >> q >> r >> s;
+            // Validasi input p
+            if (checkNumber(p)) {
+                if (inputNumberValid(p)) {
+                    a = std::stoi(p);
+                    break;
+                } else {
+                    cout << "input angka pertama tidak valid" << endl;
+                }
+            } else {
+                if (inputCharValid(p)){
+                    a = chartoInt(p);
+                    break;
+                } else {
+                    cout << "input karakter pertama tidak valid" << endl;
+                }
+            }
+            // Validasi input q
+            if (checkNumber(q)) {
+                if (inputNumberValid(q)) {
+                    b = std::stoi(q);
+                    break;
+                } else {
+                    cout << "input angka kedua tidak valid" << endl;
+                }
+            } else {
+                if (inputCharValid(q)){
+                    b = chartoInt(q);
+                    break;
+                } else {
+                    cout << "input karakter kedua tidak valid" << endl;
+                }
+            }
+            // Validasi input r
+            if (checkNumber(r)) {
+                if (inputNumberValid(r)) {
+                    c = std::stoi(r);
+                    break;
+                } else {
+                    cout << "input angka ketiga tidak valid" << endl;
+                }
+            } else {
+                if (inputCharValid(r)){
+                    c = chartoInt(r);
+                    break;
+                } else {
+                    cout << "input karakter ketiga tidak valid" << endl;
+                }
+            }
+            // Validasi input s
+            if (checkNumber(s)) {
+                if (inputNumberValid(s)) {
+                    d = std::stoi(s);
+                    break;
+                } else {
+                    cout << "input angka keempat tidak valid" << endl;
+                }
+            } else {
+                if (inputCharValid(s)){
+                    d = chartoInt(s);
+                    break;
+                } else {
+                    cout << "input karakter keempat tidak valid" << endl;
+                }
+            }
+        } while (!valid);
         cout << "Cek hasil input :" << endl;
         cout << a << " " << b << " " << c << " " << d << endl;
     } else {
