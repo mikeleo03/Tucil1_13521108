@@ -447,9 +447,9 @@ void output ()
     } else {
         cout << " " << endl;
         cout << "================  HASIL DI FILE  ================" << endl;
-        cout << "Masukkan path letak file txt akan disimpan" << endl << ">> doc/";
+        cout << "Masukkan path letak file txt akan disimpan" << endl << ">> test/";
         cin >> path;
-        output = "doc/" + path;
+        output = "test/" + path;
         ofstream MyFile(output);
         MyFile << "Pasangan Kartu : " << p << " " << q << " " << r << " " << s << endl;
         // Handling tidak ada solusi
