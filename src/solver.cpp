@@ -7,8 +7,8 @@
 using namespace std;
 
 // Inisialisasi Variabel Global
-// Bilangan yang menjadi masukan, inisialisasi dengan char untuk mempermudah konversi dengan ASCII
-int a, b, c, d;
+int a, b, c, d;        // Bilangan yang menjadi masukan untuk pemrosesan
+string p, q, r, s;     // Inisialisasi dengan string 1 char untuk mempermudah konversi ke bilangan
 int count = 0;         // Banyaknya pasangan jawaban yang mungkin
 // Inisialisasi senarai dengan 25 elemen yang mencakup semua kombinasi, 4! = 24 dengan 1 elemen block
 int elem1[25], elem2[25], elem3[25], elem4[25];
@@ -41,9 +41,7 @@ void generate4 (int* card1, int* card2, int* card3, int* card4)
     randomNumber(card1);
     randomNumber(card2);
     randomNumber(card3);
-    randomNumber(card4);
-
-    cout << *card1 << " " << *card2 << " " << *card3 << " " << *card4 << endl;   
+    randomNumber(card4); 
 }
 
 bool checkNumber (string str)
@@ -266,95 +264,113 @@ void input ()
 {
     // KAMUS LOKAL
     int com;
-    string p, q, r, s;
 
     // ALGORITMA
+    cout << "====================  INPUT  ====================" << endl;
     do {
         cout << "Tentukan cara membuat masukan" << endl;
-        cout << " 1. Berdasarkan input" << endl;
-        cout << " 2. Lakukan generate random" << endl;
+        cout << " 1. Berdasarkan masukan dari pengguna" << endl;
+        cout << " 2. Lakukan pembangkitan pasangan kartu acak" << endl;
         cout << "" << endl;
-        cout << "Pilih mode: ";
+        cout << "Pilih mode" << endl << ">> ";
         cin >> com;
     } while (com != 1 && com != 2);
     // Keluar dari kalang, artinya input 1 atau 2
     // Pemrosesan berdasarkan kondisi
     if (com == 1) {
-        bool valid = false;
-        do {
-            cout << "Masukkan 4 buah kartu" << endl;
+        bool valid1 = false;
+        bool valid2 = false;
+        bool valid3 = false;
+        bool valid4 = false;
+        bool validful = valid1 && valid2 && valid3 && valid4;
+        while (!validful) {
+            cout << " " << endl;
+            cout << "============  MASUKAN DARI PENGGUNA  ============" << endl;
+            cout << "Masukkan 4 buah kartu" << endl << ">> ";
             cin >> p >> q >> r >> s;
             // Validasi input p
             if (checkNumber(p)) {
                 if (inputNumberValid(p)) {
                     a = std::stoi(p);
-                    break;
+                    valid1 = true;
                 } else {
                     cout << "input angka pertama tidak valid" << endl;
+                    valid1 = false;
                 }
             } else {
                 if (inputCharValid(p)){
                     a = chartoInt(p);
-                    break;
+                    valid1 = true;
                 } else {
                     cout << "input karakter pertama tidak valid" << endl;
+                    valid1 = false;
                 }
             }
             // Validasi input q
             if (checkNumber(q)) {
                 if (inputNumberValid(q)) {
                     b = std::stoi(q);
-                    break;
+                    valid2 = true;
                 } else {
                     cout << "input angka kedua tidak valid" << endl;
+                    valid2 = false;
                 }
             } else {
                 if (inputCharValid(q)){
                     b = chartoInt(q);
-                    break;
+                    valid2 = true;
                 } else {
                     cout << "input karakter kedua tidak valid" << endl;
+                    valid2 = false;
                 }
             }
             // Validasi input r
             if (checkNumber(r)) {
                 if (inputNumberValid(r)) {
                     c = std::stoi(r);
-                    break;
+                    valid3 = true;
                 } else {
                     cout << "input angka ketiga tidak valid" << endl;
+                    valid3 = false;
                 }
             } else {
                 if (inputCharValid(r)){
                     c = chartoInt(r);
-                    break;
+                    valid3 = true;
                 } else {
                     cout << "input karakter ketiga tidak valid" << endl;
+                    valid3 = false;
                 }
             }
             // Validasi input s
             if (checkNumber(s)) {
                 if (inputNumberValid(s)) {
                     d = std::stoi(s);
-                    break;
+                    valid4 = true;
                 } else {
                     cout << "input angka keempat tidak valid" << endl;
+                    valid4 = false;
                 }
             } else {
                 if (inputCharValid(s)){
                     d = chartoInt(s);
-                    break;
+                    valid4 = true;
                 } else {
                     cout << "input karakter keempat tidak valid" << endl;
+                    valid4 = false;
                 }
             }
-        } while (!valid);
+            validful = valid1 && valid2 && valid3 && valid4;
+        }
         cout << "Cek hasil input :" << endl;
         cout << a << " " << b << " " << c << " " << d << endl;
     } else {
-        cout << "Kartu hasil generate :" << endl;
+        cout << " " << endl;
+        cout << "===========  PEMBANGKITAN KARTU ACAK  ===========" << endl;
+        cout << "Kartu hasil generate" << endl << ">> ";
         srand(time(0));
         generate4(&a,&b,&c,&d);
+        cout << a << " " << b << " " << c << " " << d << endl;  
     }
 }
 
@@ -364,33 +380,55 @@ void output ()
 {
     // KAMUS LOKAL
     int com;
+    string path, output;
 
     // ALGORITMA
-    cout << "Pemrosesan selesai dilaksanakan" << endl;
     cout << " " << endl;
+    cout << "====================  OUTPUT  ===================" << endl;
     do {
         cout << "Tentukan cara menerima hasil" << endl;
-        cout << " 1. Keluarkan di terminal" << endl;
-        cout << " 2. Simpan ke dalam file" << endl;
+        cout << " 1. Keluarkan hasil pada terminal" << endl;
+        cout << " 2. Simpan hasil ke dalam file" << endl;
         cout << "" << endl;
-        cout << "Pilih mode: ";
+        cout << "Pilih mode" << endl << ">> ";
         cin >> com;
     } while (com != 1 && com != 2);
     // Keluar dari kalang, artinya input 1 atau 2
     // Pemrosesan berdasarkan kondisi
     if (com == 1) {
-        cout << "Terdapat " << NEffSol << " buah solusi" << endl;
-        for (int i = 0; i <= NEffSol; i++) {
-            cout << solution[i] << endl;
+        cout << " " << endl;
+        cout << "==============  HASIL DI TERMINAL  ==============" << endl;
+        cout << "Pasangan Kartu : " << p << " " << q << " " << r << " " << s << endl;
+        // Handling tidak ada solusi
+        if (NEffSol == 0) {
+            cout << "Tidak terdapat solusi." << endl;
+        } else {
+            cout << "Terdapat " << NEffSol << " buah solusi" << endl;
+            for (int i = 0; i <= NEffSol; i++) {
+                cout << solution[i] << endl;
+            }
         }
+        cout << endl;
     } else {
-        ofstream MyFile("doc/result.txt");
-        MyFile << "Pasangan Kartu : " << a << " " << b << " " << c << " " << d << endl;
-        MyFile << "Terdapat " << NEffSol << " buah solusi" << endl;
-        for (int i = 0; i <= NEffSol; i++) {
-            MyFile << solution[i] << endl;
+        cout << " " << endl;
+        cout << "================  HASIL DI FILE  ================" << endl;
+        cout << "Masukkan path letak file txt akan disimpan" << endl << ">> doc/";
+        cin >> path;
+        output = "doc/" + path;
+        ofstream MyFile(output);
+        MyFile << "Pasangan Kartu : " << p << " " << q << " " << r << " " << s << endl;
+        // Handling tidak ada solusi
+        if (NEffSol == 0) {
+            MyFile << "Tidak terdapat solusi.";
+        } else {
+            MyFile << "Terdapat " << NEffSol << " buah solusi" << endl;
+            for (int i = 0; i < NEffSol; i++) {
+                MyFile << solution[i] << endl;
+            }
+            MyFile << solution[NEffSol];
         }
-        cout << "Hasil telah tersimpan dalam file doc/result.txt" << endl;
+        cout << "Hasil telah tersimpan dalam path yang telah diberikan" << endl;
+        cout << endl;
     }
 }
 
@@ -439,16 +477,19 @@ int main() {
 
     // Semua elemen yang dimasukkan ke dalam senarai diproses dengan berbagai operasi hingga
     // ditemukan pasangan yang memenuhi
+    cout << " " << endl;
+    cout << "===============  HASIL EKSEKUSI  ================" << endl;
+    cout << "Pemrosesan selesai dilaksanakan" << endl;
     for (int i = 1; i <= NEffElem; i++) {
         bruteForce(elem1[i], elem2[i], elem3[i], elem4[i]);
     }
-    cout << endl << "Terdapat " << count << " buah solusi" << endl;
+    cout << "> Terdapat " << count << " buah solusi" << endl;
 
     // Proses pencarian solusi selesai
     clock_t finish = clock();   // Menggunakan atribut finish pada jam
 
     // Pencetakan waktu eksekusi
-    printf("Waktu eksekusi: %.5f sekon\n", (float)(finish - start)/CLOCKS_PER_SEC);
+    printf("> Waktu eksekusi: %.5f sekon\n", (float)(finish - start)/CLOCKS_PER_SEC);
 
     // Outputting
     output();
