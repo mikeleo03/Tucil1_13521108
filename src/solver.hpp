@@ -1,5 +1,6 @@
 /* Header File solver.hpp */
 #include <iostream>
+#include <string>
 using namespace std;
 
 void randomNumber(int* nums);
@@ -10,6 +11,14 @@ void generate4(int* card1, int* card2, int* card3, int* card4);
 // Mengenerate 4 angka random
 // Menggunakan prosedur randomNumber yang telah diinisiasi sebelumnnya
 // Juga melakukan pencetakan angka hasil pembangkitan angka
+
+bool checkNumber(string str);
+// Melakukan pengecekan apakah string yang masuk benar merupakan string atau integer 
+// Untuk memudahkan perlakuan konversi string ke integer
+
+bool inputNumberValid (string input);
+// Melakukan konversi dan validasi input berupa string ke integer
+// Apakah valid (bernilai antara 2 - 10)
 
 char operations(int ops); 
 // Sebelumnya membuat representasi dari operasi dalam bentuk angka

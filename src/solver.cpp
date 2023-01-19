@@ -46,6 +46,62 @@ void generate4 (int* card1, int* card2, int* card3, int* card4)
     cout << *card1 << " " << *card2 << " " << *card3 << " " << *card4 << endl;   
 }
 
+bool checkNumber (string str)
+// Melakukan pengecekan apakah string yang masuk benar merupakan string atau integer 
+// Untuk memudahkan perlakuan konversi string ke integer
+{
+    // KAMUS LOKAL
+    int i;
+
+    // ALGORITMA
+    for (i = 0; i < str.length(); i++) {
+        if (!isdigit(str[i])) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+
+bool inputNumberValid (string input)
+// Melakukan konversi dan validasi input berupa string ke integer
+// Apakah valid (bernilai antara 2 - 10)
+{
+    // KAMUS LOKAL
+    int result;
+
+    // ALGORITMA
+    result = std::stoi(input);
+    if (result >= 2 && result <= 10) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+bool inputCharValid (string input)
+// Melakukan konversi dan validasi input berupa string ke integer
+// Apakah valid (bernilai antara 2 - 10)
+{
+    // KAMUS LOKAL
+    char c[input.length()];
+    int i=0;
+
+    // ALGORITMA
+    // Instansiasi for loop
+    while (i < input.length()) {
+        c[i] = input[i];
+        i++;
+    }
+
+    // Validasi input
+    if (c[0] == 'A' || c[0] == 'K' || c[0] == 'Q' || c[0] == 'J') {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 char operations (int ops) 
 // Sebelumnya membuat operationsasi dari operasi dalam bentuk angka
 // Fungsi ini mengembalikan bentuk angka dalam operasi menjadi operasi + - * /
@@ -123,9 +179,6 @@ void processRes (int p, int q, int r, int w, int x, int y, int z)
     res = calculate(r, calculate(q, calculate(p, (float) w, (float) x), (float) y),(float) z);
     if (res > 23.99999 && res < 24.00001) { // menghandle floating point akibat real division
         count++; // increment jumlah operasi yang ada
-        // melakukan outputing hasil sesuai dengan operator terkait
-        // cout << "((" << w << " " << operations(p) << " " << x << ") " <<
-        // operations(q) << " " << y << ") " << operations(r) << " " << z << endl;
         // Membuat solusi dalam bentuk string dan memasukkannya ke dalam senarai solusi
         sol = "((" + bil1 + " " + operations(p) + " " + bil2 + ") " +
         operations(q) + " " + bil3 + ") " + operations(r) + " " + bil4;
@@ -137,8 +190,6 @@ void processRes (int p, int q, int r, int w, int x, int y, int z)
     res = calculate(r, calculate(p, (float) w, calculate(q, (float (x)), (float) y)), (float) z);
     if (res > 23.99999 && res < 24.00001) {
         count++;
-        // cout << "(" << w << " " << operations(p) << " (" << x << " " << operations(q) <<
-        // " " << y << ")) " << operations(r) << " " << z << endl;
         sol = "(" + bil1 + " " + operations(p) + " (" + bil2 + " " + operations(q) +
         " " + bil3 + ")) " + operations(r) + " " + bil4;
         NEffSol++;
@@ -149,8 +200,6 @@ void processRes (int p, int q, int r, int w, int x, int y, int z)
     res = calculate(p, (float) w, calculate(r, calculate(q, (float) x, (float) y), float (z)));
     if (res > 23.99999 && res < 24.00001) {
         count++;
-        // cout << w << " " << operations(p) << " ((" << x << " " << operations(q) << " " <<
-        // y << ") " << operations(r) << " " << z << ")" << endl;
         sol = bil1 + " " + operations(p) + " ((" + bil2 + " " + operations(q) + " " +
         bil3 + ") " + operations(r) + " " + bil4 + ")";
         NEffSol++;
@@ -161,8 +210,6 @@ void processRes (int p, int q, int r, int w, int x, int y, int z)
     res = calculate(p, (float) w, calculate(q, (float) x, calculate(r, (float) y, (float) z)));
     if (res > 23.99999 && res < 24.00001) {
         count++;
-        // cout << w << " " << operations(p) << " (" << x << " " << operations(q) << " (" <<
-        // y << " " << operations(r) << " " << z << "))" << endl;
         sol = bil1 + " " + operations(p) + " (" + bil2 + " " + operations(q) + " (" +
         bil3 + " " + operations(r) + " " + bil4 + "))";
         NEffSol++;
@@ -173,8 +220,6 @@ void processRes (int p, int q, int r, int w, int x, int y, int z)
     res = calculate(q, calculate(p, (float) w, (float) x), calculate(r, (float) y, (float) z)); 
     if (res > 23.99999 && res < 24.00001) {
         count++;
-        // cout << "(" << w << " " << operations(p) << " " << x << ") " <<
-        // operations(q) << " (" << y << " " << operations(r) << " " << z << ")" << endl;
         sol = "(" + bil1 + " " + operations(p) + " " + bil2 + ") " +
         operations(q) + " (" + bil3 + " " + operations(r) + " " + bil4 + ")";
         NEffSol++;
@@ -207,6 +252,7 @@ void input ()
 {
     // KAMUS LOKAL
     int com;
+    string p, q, r, s;
 
     // ALGORITMA
     do {
