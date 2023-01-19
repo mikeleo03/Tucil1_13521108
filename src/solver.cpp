@@ -114,6 +114,24 @@ int chartoInt (string input)
     }
 }
 
+void inttoChar (int input, string *target)
+// Melakukan konversi dari integer yang mungkin dalam sebuah kartu menjadi karakter kartu yang bersesuaian
+{
+    // KAMUS LOKAL
+
+    // ALGORITMA
+    if (input >= 2 && input <= 10) {
+        *target = to_string(input);
+    } else {
+        switch (input) {
+            case 1  : *target = 'A'; break;
+            case 11 : *target = 'J'; break;
+            case 12 : *target = 'Q'; break;
+            case 13 : *target = 'K'; break;
+        }
+    }
+}
+
 char operations (int ops) 
 // Sebelumnya membuat operationsasi dari operasi dalam bentuk angka
 // Fungsi ini mengembalikan bentuk angka dalam operasi menjadi operasi + - * /
@@ -178,12 +196,12 @@ void processRes (int p, int q, int r, int w, int x, int y, int z)
 {
     // KAMUS LOKAL
     float res;
-    string sol;
+    string sol, bil1, bil2, bil3, bil4;
     // Konversi bilangan ke string
-    string bil1 = to_string(w);
-    string bil2 = to_string(x);
-    string bil3 = to_string(y);
-    string bil4 = to_string(z);
+    inttoChar(w, &bil1);
+    inttoChar(x, &bil2);
+    inttoChar(y, &bil3);
+    inttoChar(z, &bil4);
 
     // ALGORITMA
     // Penanganan terhadap kasus penyusunan dan kombinasi operator yang mungkin
@@ -267,14 +285,18 @@ void input ()
 
     // ALGORITMA
     cout << "====================  INPUT  ====================" << endl;
-    do {
+    while (com != 1 && com != 2) {
         cout << "Tentukan cara membuat masukan" << endl;
         cout << " 1. Berdasarkan masukan dari pengguna" << endl;
         cout << " 2. Lakukan pembangkitan pasangan kartu acak" << endl;
         cout << "" << endl;
         cout << "Pilih mode" << endl << ">> ";
         cin >> com;
-    } while (com != 1 && com != 2);
+        if (com != 1 && com != 2) {
+            cout << "Masukan salah, ulangi!" << endl;
+            cout << "-------------------------------------------------" << endl;
+        }
+    }
     // Keluar dari kalang, artinya input 1 atau 2
     // Pemrosesan berdasarkan kondisi
     if (com == 1) {
@@ -283,9 +305,9 @@ void input ()
         bool valid3 = false;
         bool valid4 = false;
         bool validful = valid1 && valid2 && valid3 && valid4;
+        cout << " " << endl;
+        cout << "============  MASUKAN DARI PENGGUNA  ============" << endl;
         while (!validful) {
-            cout << " " << endl;
-            cout << "============  MASUKAN DARI PENGGUNA  ============" << endl;
             cout << "Masukkan 4 buah kartu" << endl << ">> ";
             cin >> p >> q >> r >> s;
             // Validasi input p
@@ -294,7 +316,7 @@ void input ()
                     a = std::stoi(p);
                     valid1 = true;
                 } else {
-                    cout << "input angka pertama tidak valid" << endl;
+                    cout << "> Masukan angka pertama tidak valid" << endl;
                     valid1 = false;
                 }
             } else {
@@ -302,7 +324,7 @@ void input ()
                     a = chartoInt(p);
                     valid1 = true;
                 } else {
-                    cout << "input karakter pertama tidak valid" << endl;
+                    cout << "> Masukan karakter pertama tidak valid" << endl;
                     valid1 = false;
                 }
             }
@@ -312,7 +334,7 @@ void input ()
                     b = std::stoi(q);
                     valid2 = true;
                 } else {
-                    cout << "input angka kedua tidak valid" << endl;
+                    cout << "> Masukan angka kedua tidak valid" << endl;
                     valid2 = false;
                 }
             } else {
@@ -320,7 +342,7 @@ void input ()
                     b = chartoInt(q);
                     valid2 = true;
                 } else {
-                    cout << "input karakter kedua tidak valid" << endl;
+                    cout << "> Masukan karakter kedua tidak valid" << endl;
                     valid2 = false;
                 }
             }
@@ -330,7 +352,7 @@ void input ()
                     c = std::stoi(r);
                     valid3 = true;
                 } else {
-                    cout << "input angka ketiga tidak valid" << endl;
+                    cout << "> Masukan angka ketiga tidak valid" << endl;
                     valid3 = false;
                 }
             } else {
@@ -338,7 +360,7 @@ void input ()
                     c = chartoInt(r);
                     valid3 = true;
                 } else {
-                    cout << "input karakter ketiga tidak valid" << endl;
+                    cout << "> Masukan karakter ketiga tidak valid" << endl;
                     valid3 = false;
                 }
             }
@@ -348,7 +370,7 @@ void input ()
                     d = std::stoi(s);
                     valid4 = true;
                 } else {
-                    cout << "input angka keempat tidak valid" << endl;
+                    cout << "> Masukan angka keempat tidak valid" << endl;
                     valid4 = false;
                 }
             } else {
@@ -356,11 +378,15 @@ void input ()
                     d = chartoInt(s);
                     valid4 = true;
                 } else {
-                    cout << "input karakter keempat tidak valid" << endl;
+                    cout << "> Masukan karakter keempat tidak valid" << endl;
                     valid4 = false;
                 }
             }
             validful = valid1 && valid2 && valid3 && valid4;
+            if (!validful) {
+                cout << "Masukan salah, ulangi!" << endl;
+                cout << "-------------------------------------------------" << endl;
+            }
         }
         cout << "Cek hasil input :" << endl;
         cout << a << " " << b << " " << c << " " << d << endl;
@@ -370,7 +396,12 @@ void input ()
         cout << "Kartu hasil generate" << endl << ">> ";
         srand(time(0));
         generate4(&a,&b,&c,&d);
-        cout << a << " " << b << " " << c << " " << d << endl;  
+        // Pengisian karakter untuk masing-masing kartu
+        inttoChar (a, &p);
+        inttoChar (b, &q);
+        inttoChar (c, &r);
+        inttoChar (d, &s);
+        cout << p << " " << q << " " << r << " " << s << endl;  
     }
 }
 
@@ -385,14 +416,18 @@ void output ()
     // ALGORITMA
     cout << " " << endl;
     cout << "====================  OUTPUT  ===================" << endl;
-    do {
+    while (com != 1 && com != 2) {
         cout << "Tentukan cara menerima hasil" << endl;
         cout << " 1. Keluarkan hasil pada terminal" << endl;
         cout << " 2. Simpan hasil ke dalam file" << endl;
         cout << "" << endl;
         cout << "Pilih mode" << endl << ">> ";
         cin >> com;
-    } while (com != 1 && com != 2);
+        if (com != 1 && com != 2) {
+            cout << "Masukan salah, ulangi!" << endl;
+            cout << "-------------------------------------------------" << endl;
+        }
+    }
     // Keluar dari kalang, artinya input 1 atau 2
     // Pemrosesan berdasarkan kondisi
     if (com == 1) {
@@ -435,7 +470,7 @@ void output ()
 
 // Program Utama
 int main() {
-    cout << "Tugas Kecil 1 - IF2211 Strategi Algoritma" << endl;
+    cout << endl << "Tugas Kecil 1 - IF2211 Strategi Algoritma" << endl;
     cout << "Michael Leon Putra W / 13521108 / K-02" << endl;
     cout << "24 Card Game Solver" << endl;
     cout << " " << endl;
