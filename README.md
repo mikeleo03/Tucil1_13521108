@@ -51,11 +51,11 @@ Program untuk mencari semua solusi operasi dari *24 Card Game* dengan menggunaka
 Status : *Completed*
 | Poin  | Ya | Tidak |
 |---|---|---|
-| Program berhasil dikompilasi tanpa kesalahan | V |   |
-| Program berhasil *running* | V |   |
-| Program dapat membaca input / *generate* sendiri dan memberikan luaran | V |   |
-| Solusi yang diberikan program memenuhi (berhasil mencapai 24) | V |  |
-| Program dapat menyimpan solusi dalam file teks | V |  |
+| Program berhasil dikompilasi tanpa kesalahan | ✓ |   |
+| Program berhasil *running* | ✓ |   |
+| Program dapat membaca input / *generate* sendiri dan memberikan luaran | ✓ |   |
+| Solusi yang diberikan program memenuhi (berhasil mencapai 24) | ✓ |  |
+| Program dapat menyimpan solusi dalam file teks | ✓ |  |
 
 ## Author
 Nama : Michael Leon Putra Widhi </br>
