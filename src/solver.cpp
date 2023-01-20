@@ -13,8 +13,10 @@ int count = 0;         // Banyaknya pasangan jawaban yang mungkin
 // Inisialisasi senarai dengan 25 elemen yang mencakup semua kombinasi, 4! = 24 dengan 1 elemen block
 int elem1[25], elem2[25], elem3[25], elem4[25];
 string solution[300];
+string solutionunique[300];
 int NEffElem = 0;          // Nilai efektif dari senarai kombinasi
 int NEffSol = 0;           // Nilai efektif dari senarai solusi
+int NEffSolUni = 0;
 
 
 // Deklarasi dan Realisasi Fungsi dan Prosedur dari Header
@@ -435,12 +437,12 @@ void output ()
         cout << "==============  HASIL DI TERMINAL  ==============" << endl;
         cout << "Pasangan Kartu : " << p << " " << q << " " << r << " " << s << endl;
         // Handling tidak ada solusi
-        if (NEffSol == 0) {
-            cout << "Tidak terdapat solusi." << endl;
+        if (NEffSolUni == 0) {
+            cout << "Tidak terdapat solusi.";
         } else {
-            cout << "Terdapat " << NEffSol << " buah solusi" << endl;
-            for (int i = 0; i <= NEffSol; i++) {
-                cout << solution[i] << endl;
+            cout << "Terdapat " << NEffSolUni << " buah solusi" << endl;
+            for (int i = 0; i <= NEffSolUni; i++) {
+                cout << solutionunique[i] << endl;
             }
         }
         cout << endl;
@@ -453,14 +455,14 @@ void output ()
         ofstream MyFile(output);
         MyFile << "Pasangan Kartu : " << p << " " << q << " " << r << " " << s << endl;
         // Handling tidak ada solusi
-        if (NEffSol == 0) {
+        if (NEffSolUni == 0) {
             MyFile << "Tidak terdapat solusi.";
         } else {
-            MyFile << "Terdapat " << NEffSol << " buah solusi" << endl;
-            for (int i = 0; i < NEffSol; i++) {
-                MyFile << solution[i] << endl;
+            MyFile << "Terdapat " << NEffSolUni << " buah solusi" << endl;
+            for (int i = 0; i < NEffSolUni; i++) {
+                MyFile << solutionunique[i] << endl;
             }
-            MyFile << solution[NEffSol];
+            MyFile << solutionunique[NEffSolUni];
         }
         cout << "Hasil telah tersimpan dalam path yang telah diberikan" << endl;
         cout << endl;
@@ -515,14 +517,25 @@ int main() {
     // ditemukan pasangan yang memenuhi
     cout << " " << endl;
     cout << "===============  HASIL EKSEKUSI  ================" << endl;
-    cout << "Pemrosesan selesai dilaksanakan" << endl;
     for (int i = 1; i <= NEffElem; i++) {
         bruteForce(elem1[i], elem2[i], elem3[i], elem4[i]);
     }
-    cout << "> Terdapat " << count << " buah solusi" << endl;
-
     // Proses pencarian solusi selesai
     clock_t finish = clock();   // Menggunakan atribut finish pada jam
+
+    // Unifikasi jawaban
+    for (int i = 0; i <= NEffSol; i++) {
+        for (int j = 0; j <= i; j++) {
+            if (solution[i] == solution[j] && i != j) {
+                break;
+            } if (i == j && i != 0) {
+                NEffSolUni++;
+                solutionunique[NEffSolUni] = solution[i];
+            }
+        }
+    }
+    cout << "Pemrosesan selesai dilaksanakan" << endl;
+    cout << "> Terdapat " << NEffSolUni << " buah solusi" << endl;
 
     // Pencetakan waktu eksekusi
     printf("> Waktu eksekusi: %.5f sekon\n", (float)(finish - start)/CLOCKS_PER_SEC);
