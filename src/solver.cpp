@@ -1,10 +1,11 @@
+/* File utama solver.cpp */
 #include <iostream>
 #include "solver.hpp"
 #include <cstdlib>
-#include <time.h>
-#include <string>
+#include <chrono>
 #include <fstream>
 using namespace std;
+using namespace std::chrono;
 
 // Inisialisasi Variabel Global
 int a, b, c, d;        // Bilangan yang menjadi masukan untuk pemrosesan
@@ -54,7 +55,7 @@ bool checkNumber (string str)
     int i;
 
     // ALGORITMA
-    for (i = 0; i < str.length(); i++) {
+    for (i = 0; i <= str.length(); i++) {
         if (!isdigit(str[i])) {
             return false;
         } else {
@@ -95,7 +96,7 @@ bool inputCharValid (string input)
     }
 
     // Validasi input
-    if (c[0] == 'A' || c[0] == 'K' || c[0] == 'Q' || c[0] == 'J') {
+    if ((c[0] == 'A' || c[0] == 'K' || c[0] == 'Q' || c[0] == 'J') && input.length() == 1) {
         return true;
     } else {
         return false;
@@ -283,35 +284,62 @@ void input ()
 // Pengguna dapat memilih untuk memasukkan input atau membangkitkan bilangan secara acak
 {
     // KAMUS LOKAL
-    int com;
+    string com;
+    int pil;
+    bool valid = false;
 
     // ALGORITMA
     cout << "====================  INPUT  ====================" << endl;
-    while (com != 1 && com != 2) {
+    while (!valid) {
         cout << "Tentukan cara membuat masukan" << endl;
         cout << " 1. Berdasarkan masukan dari pengguna" << endl;
         cout << " 2. Lakukan pembangkitan pasangan kartu acak" << endl;
         cout << "" << endl;
         cout << "Pilih mode" << endl << ">> ";
         cin >> com;
-        if (com != 1 && com != 2) {
+        if (checkNumber(com)) {
+            pil = std::stoi(com);
+            if (pil != 1 && pil != 2) {
+                cout << "Masukan salah, ulangi!" << endl;
+                cout << "-------------------------------------------------" << endl;
+                valid = false;
+            } else {
+                valid = true;
+            }
+        } else {
             cout << "Masukan salah, ulangi!" << endl;
             cout << "-------------------------------------------------" << endl;
+            valid = false;
         }
     }
     // Keluar dari kalang, artinya input 1 atau 2
     // Pemrosesan berdasarkan kondisi
-    if (com == 1) {
+    if (pil == 1) {
         bool valid1 = false;
         bool valid2 = false;
         bool valid3 = false;
         bool valid4 = false;
         bool validful = valid1 && valid2 && valid3 && valid4;
+        // Handling input lebih banyak dari 4 melalui analisis konversi panjang string
+        char input4[100];
+        string inputlast;
         cout << " " << endl;
         cout << "============  MASUKAN DARI PENGGUNA  ============" << endl;
         while (!validful) {
-            cout << "Masukkan 4 buah kartu" << endl << ">> ";
-            cin >> p >> q >> r >> s;
+            cout << "Masukkan 4 buah kartu (A, 2-10, J, Q, atau K)" << endl << ">> ";
+            cin >> p >> q >> r;
+            // Skema berbeda saat meminta kartu keempat
+            cin.getline(input4,100);
+            // Melakukan handling spacing di awal pada fungsi getline dengan mendefinisikan
+            // array of character yang baru
+            char* input5;
+            input5 = (char*)malloc(100);
+            for (int i = 0; input4[i] != '\0'; i++) {
+                input5[i] = input4[i + 1];
+            }
+            // Melakukan konversi array of char ke string s untuk divalidasi
+            s = input5;
+            // Skema validasi per input p, q, r, s
             // Validasi input p
             if (checkNumber(p)) {
                 if (inputNumberValid(p)) {
@@ -367,21 +395,27 @@ void input ()
                 }
             }
             // Validasi input s
-            if (checkNumber(s)) {
-                if (inputNumberValid(s)) {
-                    d = std::stoi(s);
-                    valid4 = true;
-                } else {
-                    cout << "> Masukan angka keempat tidak valid" << endl;
-                    valid4 = false;
-                }
+            // Validasi input berlebih yang ditangani di variabel terakhir
+            if (s.length() > 2) {
+                cout << "> Jumlah input lebih dari 4" << endl;
+                valid4 = false;
             } else {
-                if (inputCharValid(s)){
-                    d = chartoInt(s);
-                    valid4 = true;
+                if (checkNumber(s)) {
+                    if (inputNumberValid(s)) {
+                        d = std::stoi(s);
+                        valid4 = true;
+                    } else {
+                        cout << "> Masukan angka keempat tidak valid" << endl;
+                        valid4 = false;
+                    }
                 } else {
-                    cout << "> Masukan karakter keempat tidak valid" << endl;
-                    valid4 = false;
+                    if (inputCharValid(s)){
+                        d = chartoInt(s);
+                        valid4 = true;
+                    } else {
+                        cout << "> Masukan karakter keempat tidak valid" << endl;
+                        valid4 = false;
+                    }
                 }
             }
             validful = valid1 && valid2 && valid3 && valid4;
@@ -412,33 +446,44 @@ void output ()
 // Pengguna dapat memilih untuk hanya menampilkan di terminak atau menyimpan ke file
 {
     // KAMUS LOKAL
-    int com;
-    string path, output;
+    string com, path, output;
+    int pil;
+    bool valid = false;
 
     // ALGORITMA
     cout << " " << endl;
     cout << "====================  OUTPUT  ===================" << endl;
-    while (com != 1 && com != 2) {
+    while (!valid) {
         cout << "Tentukan cara menerima hasil" << endl;
         cout << " 1. Keluarkan hasil pada terminal" << endl;
         cout << " 2. Simpan hasil ke dalam file" << endl;
         cout << "" << endl;
         cout << "Pilih mode" << endl << ">> ";
         cin >> com;
-        if (com != 1 && com != 2) {
+        if (checkNumber(com)) {
+            pil = std::stoi(com);
+            if (pil != 1 && pil != 2) {
+                cout << "Masukan salah, ulangi!" << endl;
+                cout << "-------------------------------------------------" << endl;
+                valid = false;
+            } else {
+                valid = true;
+            }
+        } else {
             cout << "Masukan salah, ulangi!" << endl;
             cout << "-------------------------------------------------" << endl;
+            valid = false;
         }
     }
     // Keluar dari kalang, artinya input 1 atau 2
     // Pemrosesan berdasarkan kondisi
-    if (com == 1) {
+    if (pil == 1) {
         cout << " " << endl;
         cout << "==============  HASIL DI TERMINAL  ==============" << endl;
         cout << "Pasangan Kartu : " << p << " " << q << " " << r << " " << s << endl;
         // Handling tidak ada solusi
         if (NEffSolUni == 0) {
-            cout << "Tidak terdapat solusi.";
+            cout << "Tidak terdapat solusi." << endl;
         } else {
             cout << "Terdapat " << NEffSolUni << " buah solusi" << endl;
             for (int i = 0; i <= NEffSolUni; i++) {
@@ -508,20 +553,19 @@ int main() {
     checkCombination(d, c, a, b);
     checkCombination(d, c, b, a);
 
-    // Proses pencarian solusi dimulai
-    cout << " " << endl;
-    cout << "Mencari penyelesaian..." << endl;
-    clock_t start = clock();   // Menggunakan atribut start pada jam
-
     // Semua elemen yang dimasukkan ke dalam senarai diproses dengan berbagai operasi hingga
     // ditemukan pasangan yang memenuhi
     cout << " " << endl;
+    cout << "Mencari penyelesaian..." << endl;
+    cout << " " << endl;
+    // Proses pencarian solusi dimulai
+    auto start = high_resolution_clock::now();   // Menggunakan atribut start pada jam
     cout << "===============  HASIL EKSEKUSI  ================" << endl;
     for (int i = 1; i <= NEffElem; i++) {
         bruteForce(elem1[i], elem2[i], elem3[i], elem4[i]);
     }
     // Proses pencarian solusi selesai
-    clock_t finish = clock();   // Menggunakan atribut finish pada jam
+    auto finish = high_resolution_clock::now();   // Menggunakan atribut finish pada jam
 
     // Unifikasi jawaban
     for (int i = 0; i <= NEffSol; i++) {
@@ -538,7 +582,8 @@ int main() {
     cout << "> Terdapat " << NEffSolUni << " buah solusi" << endl;
 
     // Pencetakan waktu eksekusi
-    printf("> Waktu eksekusi: %.5f sekon\n", (float)(finish - start)/CLOCKS_PER_SEC);
+    std::chrono::duration<double> diff = finish - start;
+    cout << "> Waktu eksekusi: " << diff.count() << " sekon" << endl;
 
     // Outputting
     output();
