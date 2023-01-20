@@ -20,6 +20,16 @@ bool inputNumberValid (string input);
 // Melakukan konversi dan validasi input berupa string ke integer
 // Apakah valid (bernilai antara 2 - 10)
 
+bool inputCharValid (string input);
+// Melakukan konversi dan validasi input berupa string ke integer
+// Apakah valid (bernilai antara 2 - 10)
+
+int chartoInt (string input);
+// Melakukan konversi dari karakter karater yang mungkin dalam sebuah kartu menjadi sebuah integer
+
+void inttoChar (int input, string *target);
+// Melakukan konversi dari integer yang mungkin dalam sebuah kartu menjadi karakter kartu yang bersesuaian
+
 char operations(int ops); 
 // Sebelumnya membuat representasi dari operasi dalam bentuk angka
 // Fungsi ini mengembalikan bentuk angka dalam operasi menjadi operasi + - * /

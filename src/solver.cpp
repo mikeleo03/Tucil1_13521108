@@ -470,6 +470,7 @@ void output ()
 
 // Program Utama
 int main() {
+    system("CLS"); // clear screen
     cout << endl << "Tugas Kecil 1 - IF2211 Strategi Algoritma" << endl;
     cout << "Michael Leon Putra W / 13521108 / K-02" << endl;
     cout << "24 Card Game Solver" << endl;
