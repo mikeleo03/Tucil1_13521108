@@ -4,13 +4,12 @@
 using namespace std;
 
 void randomNumber(int* nums);
-// Menciptakan angka secara anak (random number generator)
+// Membangkitkan angka secara anak (random number generator)
 // Seeds yang digunakan adalah waktu saat ini, sehingga relatif sulit terulang kembali
 
 void generate4(int* card1, int* card2, int* card3, int* card4);
 // Mengenerate 4 angka random
-// Menggunakan prosedur randomNumber yang telah diinisiasi sebelumnnya
-// Juga melakukan pencetakan angka hasil pembangkitan angka
+// Menggunakan prosedur randomNumber yang telah diinisiasi sebelumnya
 
 bool checkNumber(string str);
 // Melakukan pengecekan apakah string yang masuk benar merupakan string atau integer 
@@ -21,8 +20,8 @@ bool inputNumberValid (string input);
 // Apakah valid (bernilai antara 2 - 10)
 
 bool inputCharValid (string input);
-// Melakukan konversi dan validasi input berupa string ke integer
-// Apakah valid (bernilai antara 2 - 10)
+// Melakukan analisis elemen pertama dari sebuah string
+// Apakah valid (bernilai A, K, Q, atau J)
 
 int chartoInt (string input);
 // Melakukan konversi dari karakter karater yang mungkin dalam sebuah kartu menjadi sebuah integer

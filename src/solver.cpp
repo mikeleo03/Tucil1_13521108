@@ -1,4 +1,5 @@
 /* File utama solver.cpp */
+// Impor Modul Eksternal
 #include <iostream>
 #include "solver.hpp"
 #include <cstdlib>
@@ -10,19 +11,21 @@ using namespace std::chrono;
 // Inisialisasi Variabel Global
 int a, b, c, d;        // Bilangan yang menjadi masukan untuk pemrosesan
 string p, q, r, s;     // Inisialisasi dengan string 1 char untuk mempermudah konversi ke bilangan
-int count = 0;         // Banyaknya pasangan jawaban yang mungkin
 // Inisialisasi senarai dengan 25 elemen yang mencakup semua kombinasi, 4! = 24 dengan 1 elemen block
 int elem1[25], elem2[25], elem3[25], elem4[25];
+int NEffElem = 0;          // Nilai efektif dari senarai kombinasi
+// 2 buah senarai untuk menyimpan solusi dan solusi unik
 string solution[300];
 string solutionunique[300];
-int NEffElem = 0;          // Nilai efektif dari senarai kombinasi
-int NEffSol = 0;           // Nilai efektif dari senarai solusi
+// Nilai efektif dari kedua senarai diatas
+int NEffSol = 0;      
 int NEffSolUni = 0;
 
 
 // Deklarasi dan Realisasi Fungsi dan Prosedur dari Header
+
 void randomNumber (int* nums) 
-// Menciptakan angka secara anak (random number generator)
+// Membangkitkan angka secara anak (random number generator)
 // Seeds yang digunakan adalah waktu saat ini, sehingga relatif sulit terulang kembali
 {
     // KAMUS LOKAL
@@ -36,10 +39,10 @@ void randomNumber (int* nums)
 
 void generate4 (int* card1, int* card2, int* card3, int* card4)
 // Mengenerate 4 angka random
-// Menggunakan prosedur randomNumber yang telah diinisiasi sebelumnnya
-// Juga melakukan pencetakan angka hasil pembangkitan angka
+// Menggunakan prosedur randomNumber yang telah diinisiasi sebelumnya
 {
     // KAMUS LOKAL
+
     // ALGORITMA
     randomNumber(card1);
     randomNumber(card2);
@@ -81,8 +84,8 @@ bool inputNumberValid (string input)
 }
 
 bool inputCharValid (string input)
-// Melakukan konversi dan validasi input berupa string ke integer
-// Apakah valid (bernilai antara 2 - 10)
+// Melakukan analisis elemen pertama dari sebuah string
+// Apakah valid (bernilai A, K, Q, atau J)
 {
     // KAMUS LOKAL
     char c[input.length()];
@@ -140,6 +143,7 @@ char operations (int ops)
 // Fungsi ini mengembalikan bentuk angka dalam operasi menjadi operasi + - * /
 {
     // KAMUS LOKAL
+
     // ALGORITMA
     switch (ops) {
         case 1 : return ('+');
@@ -154,6 +158,7 @@ float calculate (int ops, float x, float y)
 // menjadi bilangan real (untuk memudahkan real division) dan operator dalam angka
 {
     // KAMUS LOKAL
+
     // ALGORITMA
     switch (ops) {
         case 1 : return (x + y);
@@ -211,7 +216,6 @@ void processRes (int p, int q, int r, int w, int x, int y, int z)
     // ((w ops x) ops y) ops z
     res = calculate(r, calculate(q, calculate(p, (float) w, (float) x), (float) y),(float) z);
     if (res > 23.99999 && res < 24.00001) { // menghandle floating point akibat real division
-        count++; // increment jumlah operasi yang ada
         // Membuat solusi dalam bentuk string dan memasukkannya ke dalam senarai solusi
         sol = "((" + bil1 + " " + operations(p) + " " + bil2 + ") " +
         operations(q) + " " + bil3 + ") " + operations(r) + " " + bil4;
@@ -222,7 +226,6 @@ void processRes (int p, int q, int r, int w, int x, int y, int z)
     // (w ops (x ops y)) ops z
     res = calculate(r, calculate(p, (float) w, calculate(q, (float (x)), (float) y)), (float) z);
     if (res > 23.99999 && res < 24.00001) {
-        count++;
         sol = "(" + bil1 + " " + operations(p) + " (" + bil2 + " " + operations(q) +
         " " + bil3 + ")) " + operations(r) + " " + bil4;
         NEffSol++;
@@ -232,7 +235,6 @@ void processRes (int p, int q, int r, int w, int x, int y, int z)
     // w ops ((x ops y) ops z)
     res = calculate(p, (float) w, calculate(r, calculate(q, (float) x, (float) y), float (z)));
     if (res > 23.99999 && res < 24.00001) {
-        count++;
         sol = bil1 + " " + operations(p) + " ((" + bil2 + " " + operations(q) + " " +
         bil3 + ") " + operations(r) + " " + bil4 + ")";
         NEffSol++;
@@ -242,7 +244,6 @@ void processRes (int p, int q, int r, int w, int x, int y, int z)
     // w ops (x ops (y ops z))
     res = calculate(p, (float) w, calculate(q, (float) x, calculate(r, (float) y, (float) z)));
     if (res > 23.99999 && res < 24.00001) {
-        count++;
         sol = bil1 + " " + operations(p) + " (" + bil2 + " " + operations(q) + " (" +
         bil3 + " " + operations(r) + " " + bil4 + "))";
         NEffSol++;
@@ -252,7 +253,6 @@ void processRes (int p, int q, int r, int w, int x, int y, int z)
     // (w ops x) ops (y ops z)
     res = calculate(q, calculate(p, (float) w, (float) x), calculate(r, (float) y, (float) z)); 
     if (res > 23.99999 && res < 24.00001) {
-        count++;
         sol = "(" + bil1 + " " + operations(p) + " " + bil2 + ") " +
         operations(q) + " (" + bil3 + " " + operations(r) + " " + bil4 + ")";
         NEffSol++;
@@ -312,6 +312,7 @@ void input ()
             valid = false;
         }
     }
+
     // Keluar dari kalang, artinya input 1 atau 2
     // Pemrosesan berdasarkan kondisi
     if (pil == 1) {
@@ -330,6 +331,7 @@ void input ()
             cin >> p >> q >> r;
             // Skema berbeda saat meminta kartu keempat
             cin.getline(input4,100);
+
             // Melakukan handling spacing di awal pada fungsi getline dengan mendefinisikan
             // array of character yang baru
             char* input5;
@@ -339,6 +341,7 @@ void input ()
             }
             // Melakukan konversi array of char ke string s untuk divalidasi
             s = input5;
+
             // Skema validasi per input p, q, r, s
             // Validasi input p
             if (checkNumber(p)) {
@@ -475,6 +478,7 @@ void output ()
             valid = false;
         }
     }
+    
     // Keluar dari kalang, artinya input 1 atau 2
     // Pemrosesan berdasarkan kondisi
     if (pil == 1) {
