@@ -1,0 +1,2 @@
+Pasangan Kartu : 7 8 7 7
+Tidak terdapat solusi.

@@ -1,0 +1,35 @@
+Pasangan Kartu : A K Q J
+Terdapat 32 buah solusi
+
+((A * K) - J) * Q
+(A * (K - J)) * Q
+A * ((K - J) * Q)
+A * (Q * (K - J))
+(A * Q) * (K - J)
+(K - (A * J)) * Q
+((K * A) - J) * Q
+((K / A) - J) * Q
+((K - J) * A) * Q
+(K - (J * A)) * Q
+(K - J) * (A * Q)
+((K - J) / A) * Q
+(K - (J / A)) * Q
+(K - J) / (A / Q)
+((K - J) * Q) * A
+(K - J) * (Q * A)
+((K - J) * Q) / A
+(K - J) * (Q / A)
+Q * ((A * K) - J)
+Q * (A * (K - J))
+(Q * A) * (K - J)
+(Q / A) * (K - J)
+Q / (A / (K - J))
+Q * (K - (A * J))
+Q * ((K * A) - J)
+Q * ((K / A) - J)
+(Q * (K - J)) * A
+Q * ((K - J) * A)
+Q * (K - (J * A))
+(Q * (K - J)) / A
+Q * ((K - J) / A)
+Q * (K - (J / A))

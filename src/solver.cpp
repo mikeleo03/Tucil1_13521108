@@ -563,8 +563,8 @@ int main() {
     cout << "Mencari penyelesaian..." << endl;
     cout << " " << endl;
     // Proses pencarian solusi dimulai
-    auto start = high_resolution_clock::now();   // Menggunakan atribut start pada jam
     cout << "===============  HASIL EKSEKUSI  ================" << endl;
+    auto start = high_resolution_clock::now();   // Menggunakan atribut start pada jam
     for (int i = 1; i <= NEffElem; i++) {
         bruteForce(elem1[i], elem2[i], elem3[i], elem4[i]);
     }
