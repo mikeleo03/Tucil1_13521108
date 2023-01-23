@@ -25,7 +25,7 @@ int NEffSolUni = 0;
 // Deklarasi dan Realisasi Fungsi dan Prosedur dari Header
 
 void randomNumber (int* nums) 
-// Membangkitkan angka secara anak (random number generator)
+// Membangkitkan angka secara acak (random number generator)
 // Seeds yang digunakan adalah waktu saat ini, sehingga relatif sulit terulang kembali
 {
     // KAMUS LOKAL
@@ -139,7 +139,7 @@ void inttoChar (int input, string *target)
 }
 
 char operations (int ops) 
-// Sebelumnya membuat operationsasi dari operasi dalam bentuk angka
+// Sebelumnya membuat representasi dari operasi dalam bentuk angka
 // Fungsi ini mengembalikan bentuk angka dalam operasi menjadi operasi + - * /
 {
     // KAMUS LOKAL
@@ -154,7 +154,7 @@ char operations (int ops)
 }
 
 float calculate (int ops, float x, float y)
-// Melakukan operasi bilangan real antara dua bilangan yang operationsasi nya diubah
+// Melakukan operasi bilangan real antara dua bilangan yang representasi nya diubah
 // menjadi bilangan real (untuk memudahkan real division) dan operator dalam angka
 {
     // KAMUS LOKAL
@@ -181,7 +181,7 @@ void checkCombination (int a, int b, int c, int d)
     // Inisialisasi
     i = 1, found= false;
 
-    while (i < NEffElem && not found) {
+    while (i < NEffElem && !found) {
         if (a == elem1[i] && b == elem2[i] && c == elem3[i] && d == elem4[i]) {
             // Jika masing-masing elemen yang bersesuaian sama, sudah ada dalam senarai
             found = true;
@@ -192,7 +192,7 @@ void checkCombination (int a, int b, int c, int d)
     }
     // Berhasil keluar dari kalang, kondisi yang mungkin adalah i = NEffElem atau not found
     // Jika not found, maka akan nilai tersebut akan dimasukkan ke dalam senarai
-    if (not found) {
+    if (!found) {
         NEffElem++;
         elem1[NEffElem] = a; elem2[NEffElem] = b; elem3[NEffElem] = c; elem4[NEffElem] = d;
     }

@@ -4,7 +4,7 @@
 using namespace std;
 
 void randomNumber(int* nums);
-// Membangkitkan angka secara anak (random number generator)
+// Membangkitkan angka secara acak (random number generator)
 // Seeds yang digunakan adalah waktu saat ini, sehingga relatif sulit terulang kembali
 
 void generate4(int* card1, int* card2, int* card3, int* card4);
